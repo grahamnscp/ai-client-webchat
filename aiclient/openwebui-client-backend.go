@@ -77,7 +77,7 @@ func initTraceProvider() (*trace.TracerProvider, error) {
 // InitAIChat
 func InitAIChat() {
 
-	log.Println("aiclient.initPInitAIChat: called")
+	log.Println("aiclient.InitAIChat: called")
 
 	// Set up OpenTelemetry trace provider.
 	tp, err := initTraceProvider()
