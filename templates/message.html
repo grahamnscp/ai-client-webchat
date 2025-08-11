@@ -1,0 +1,18 @@
+<div id="chat_room" hx-swap-oob="beforeend">
+
+  <li id="question" class="flex my-2">
+    <h1 class="text-base font-bold mr-2 text-blue-500">Prompt: </h1>
+    <p class="text-base"> {{ .Prompt }}</p>
+  </li>
+
+  <li id="response" class="flex my-3">
+    <h1 class="text-base font-bold mr-2 text-red-500">Response: </h1>
+    <p class="text-base"> {{ .Response }}</p>
+  </li>
+  <br>
+
+</div>
+
+<script>
+  setTimeout("location.reload(true);", 50000);
+</script>
