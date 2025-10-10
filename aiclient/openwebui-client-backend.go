@@ -30,7 +30,10 @@ var apiURL = fmt.Sprintf("http://%s/ollama/v1/chat/completions",
 
 var apiKey = os.Getenv("OPEN_WEBUI_API_KEY")
 
-var openLitEndpoint = os.Getenv("OTEL_EXPORTER_OTLP_HOSTNAME")
+//var openLitEndpoint = os.Getenv("OTEL_EXPORTER_OTLP_HOSTNAME")
+
+var suseObsHTTPEndpoint = os.Getenv("SUSEOBS_EXPORTER_OTLP_HOSTNAME")
+var suseObsAPIKey = os.Getenv("SUSEOBS_CLIENT_API_KEY")
 
 var ctx context.Context
 var webclient *http.Client
@@ -46,30 +49,37 @@ func initTraceProvider() (*trace.TracerProvider, error) {
 
 	// Create a new OTLP trace exporter using gRPC.
 	ctx = context.Background()
-	/*
-		exporter, err := otlptracegrpc.New(ctx,
-			otlptracegrpc.WithInsecure(),
-			otlptracegrpc.WithEndpoint(openLitEndpoint),
-			otlptracegrpc.WithDialOption(grpc.WithBlock()),
-		)
-	*/
-	exporter, err := otlptracehttp.New(ctx,
-		otlptracehttp.WithInsecure(),
-		otlptracehttp.WithEndpoint(openLitEndpoint),
-	)
-	if err != nil {
-		return nil, fmt.Errorf("failed to create OTLP exporter: %w", err)
-	}
+
+  // auth headers
+  headers := map[string]string{
+    "Content-Type":  "application/json",
+    "Authorization": "SUSEObservability " + suseObsAPIKey,
+  }
+
+  // http endpoint
+  exporter, err := otlptracehttp.New(ctx,
+    otlptracehttp.WithInsecure(),
+    otlptracehttp.WithEndpoint(suseObsHTTPEndpoint),
+    otlptracehttp.WithHeaders(headers),
+    //otlptracehttp.WithCaptureInput(),
+    //otlptracehttp.WithCaptureOutput(),
+  )
+  if err != nil {
+    return nil, fmt.Errorf("aiclient.initTraceProvider: failed to create OTLP exporter: %w", err)
+  }
 
 	// Create a new tracer provider with the OTLP exporter.
-	tp := trace.NewTracerProvider(
-		trace.WithBatcher(exporter),
-		trace.WithResource(resource.NewWithAttributes(
-			semconv.SchemaURL,
-			semconv.ServiceName("go-webchat"),
-			attribute.String("environment", "development"),
-		)),
-	)
+  // Create a new tracer provider with the OTLP exporter.
+  tp := trace.NewTracerProvider(
+    trace.WithBatcher(exporter),
+    trace.WithResource(resource.NewWithAttributes(
+      semconv.SchemaURL,
+      semconv.ServiceName("go-webchat"),
+      semconv.ServiceVersion("1.0"),
+      semconv.ServiceNamespace("local"),
+      semconv.DeploymentEnvironment("dev"),
+    )),
+  )
 	otel.SetTracerProvider(tp)
 	return tp, nil
 }
