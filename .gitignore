@@ -1,0 +1,21 @@
+#.gitignore
+#.gitignore
+
+# vendor/
+.DS_Store
+*/.DS_Store
+
+# config
+.envrc
+
+# Misc
+*.swp
+*/*.swp
+notes.txt
+dev/*
+
+# go
+#go.mod
+#go.sum
+#*/go.mod
+#*/go.sum
