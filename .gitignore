@@ -13,6 +13,7 @@
 */*.swp
 notes.txt
 dev/*
+nohup.out
 
 # go
 #go.mod

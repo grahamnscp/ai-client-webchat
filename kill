@@ -1,0 +1,3 @@
+#!/bin/bash
+WEBCHAT_PID=`ps -ef | grep webchat | egrep -v 'grep|run' | awk '{ print $2 }'`
+kill -TERM $WEBCHAT_PID
