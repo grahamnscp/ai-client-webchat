@@ -2,7 +2,7 @@
 Dev test sample webapp to front proxy messages to local open webui instance
   
 Tested with openlit server running in docker - https://github.com/openlit/openlit  
-Modified ai backend to send telemetry to a local SUSE Observability instance.  
+Modified ai backend to send telemetry to a local SUSE Observability instance - https://documentation.suse.com/suse-ai/1.0/html/AI-monitoring/index.html  
 Note that open telemetry libraries also register in this local deployment.  
 
 environment variables are set using direnv .envrc (not in repo) see example .envrc.example  
