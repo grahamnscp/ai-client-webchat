@@ -1,2 +1,2 @@
 #!/bin/bash
-go run webchat.go
+nohup go run webchat.go &
