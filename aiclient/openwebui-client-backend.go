@@ -25,8 +25,8 @@ import (
 )
 
 // Global Variables
-var apiURL = fmt.Sprintf("http://%s/ollama/v1/chat/completions",
-	os.Getenv("OPEN_WEBUI_HOSTNAME"))
+//var apiURL = fmt.Sprintf("http://%s/ollama/v1/chat/completions", os.Getenv("OPEN_WEBUI_HOSTNAME"))
+var apiURL = fmt.Sprintf("http://%s/api/chat/completions", os.Getenv("OPEN_WEBUI_HOSTNAME"))
 
 var apiKey = os.Getenv("OPEN_WEBUI_API_KEY")
 
