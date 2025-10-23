@@ -8,10 +8,10 @@ import (
 )
 
 func serveIndex(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" {
-		http.Error(w, "not found", http.StatusNotFound)
-		return
-	}
+	//if r.URL.Path != "/" {
+	//	http.Error(w, "not found", http.StatusNotFound)
+	//	return
+	//}
 
 	if r.Method != "GET" {
 		http.Error(w, "method not found", http.StatusNotFound)
