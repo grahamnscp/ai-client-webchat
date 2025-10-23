@@ -21,12 +21,17 @@ func serveIndex(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "templates/index.html")
 }
 
+func faviconHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "static/favicon.ico")
+}
+
 func main() {
 	broker := chatapp.NewMsgBroker()
 	go broker.Run()
 
 	http.HandleFunc("/", serveIndex)
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+  http.HandleFunc("/favicon.ico", faviconHandler)
 		chatapp.ServeWs(broker, w, r)
 	})
 
