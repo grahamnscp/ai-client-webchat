@@ -30,11 +30,11 @@ func main() {
 	go broker.Run()
 
 	http.HandleFunc("/", serveIndex)
-	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
   http.HandleFunc("/favicon.ico", faviconHandler)
+	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		chatapp.ServeWs(broker, w, r)
 	})
 
-  log.Print("Serve Http on 8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+  log.Print("Serve Http on 8086")
+	log.Fatal(http.ListenAndServe(":8086", nil))
 }
